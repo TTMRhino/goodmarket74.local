@@ -34,4 +34,9 @@ class Items extends \yii\db\ActiveRecord
             'price' => 'Price',
         ];
     }
+
+    public function getItemByVendor($vendor)
+    {
+        return $this::find()->where(['vendor'=>$vendor])->one();  
+    }
 }

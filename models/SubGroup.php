@@ -41,10 +41,15 @@ class SubGroup extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getSubgroupNameById($id){
-        $model=$this::find()->where(['id'=>$id])->one();
-      //  die("HIT!".$model->id);
-        return $model->title;
-        
-      }
+    public function getSubgroupNameById($id)
+    {
+        $model=$this::find()->where(['id'=>$id])->one();    
+        return $model->title;        
+    }
+
+    public function getSubgroupIdByName($title)
+    {
+        $model=$this::find()->where(['title'=>$title])->one();    
+        return $model->id;        
+    }
 }

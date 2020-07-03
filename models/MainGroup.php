@@ -41,10 +41,13 @@ class MainGroup extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getMaingroupNameById($id){
-       // var_dump($id);
-        $model=$this::find()->where(['id'=>$id])->one();
-       // die("HIT!".$model->id);
+    public function getMaingroupNameById($id){      
+        $model=$this::find()->where(['id'=>$id])->one();     
         return $model->title;
-      }
+    }
+
+    public function getMaingroupIdByName($title){      
+        $model=$this::find()->where(['title'=>$title])->one();     
+        return $model->id;
+    }
 }

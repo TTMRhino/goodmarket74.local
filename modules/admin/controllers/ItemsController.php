@@ -5,10 +5,12 @@ namespace app\modules\admin\controllers;
 use Yii;
 use app\models\Items;
 use app\models\ItemsSearch;
+use app\models\UploadFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 
 /**
@@ -84,6 +86,28 @@ class ItemsController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    /** кнопка Загрузка файла с json   */
+
+    public function actionLoadeprice()
+    {
+        $model = new Items();
+        $upload_model = new UploadFile();
+
+        if (Yii::$app->request->isPost ) {
+            
+            $upload_model->file= UploadedFile::getInstance($upload_model,'file');
+            $json=$upload_model->getJson();
+
+          
+            
+          
+            Yii::$app->session->setFlash('success', "Прайс загружен");
+            return $this->redirect(['loadeprice']);
+        }
+
+        return $this->render('loadeprice', compact('model','upload_model'));
     }
 
     /**
