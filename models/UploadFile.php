@@ -25,41 +25,62 @@ class  UploadFile extends Model
 
     public function getJson()
     {
-      //  $this->file=$file;        
-     
+         
         $xml_file=file_get_contents($this->file->tempName);
         $json = json_decode($xml_file,true);   
         
-        
+         if (empty($json)){
+            return "error"; //если json поврежден
+         }
         
         $main_group = new MainGroup();
         $sub_group = new SubGroup();
-        $items = new Items();
-        foreach($json["list"] as $item){   
-            
-            $main_id=$main_group->getMaingroupIdByName($item["main_group"]);//находим id основной группы по имени
-            $sub_id=$sub_group->getSubgroupIdByName($item["sub_group"]);//находим id подгруппы по имени
+        $new_vendor = new Items();
+        foreach($json["list"] as $item){             
 
-          $find_vendor =  $items->getItemByVendor($item["vendor"]);
+          $exist_item =  $new_vendor->getItemByVendor($item["vendor"]);//ищем запись по артиклу
 
-          if (!is_null($find_vendor)){
-            echo "совпал = ".$find_vendor->vendor;
+          $main_id=$main_group->getMaingroupIdByName($item["main_group"]);//находим id основной группы по имени
+          $sub_id=$sub_group->getSubgroupIdByName($item["sub_group"]);//находим id подгруппы по имени
+
+          if (empty($main_id) or empty($sub_id) ){
+              return "error"; //если под группы не совпали
+          }
+
+          //формируем цену
+          $pur_price = $item["price"];
+          $price = round(($pur_price * 30 / 100),0);
+          $price = ceil($pur_price+ $price);
+
+          if ((!empty($exist_item))){
+            //нашли запись приступаем к update          
+
+            $exist_item->main_group = $main_id;
+            $exist_item->sub_group = $sub_id; 
+            $exist_item->pur_price = $pur_price;           
+            $exist_item->price = $price;            
+            $exist_item->update();
+
+            //echo "Update = ".$exist_item->vendor;
+
           }else {
-            echo "НЕсовпал = ".$item["vendor"]; 
-          }       
+            $new_item = new Items();
 
-          //Продожить от сюдова!
-           
-             
+            $new_item->main_group = $main_id;
+            $new_item->sub_group = $sub_id;
+            $new_item->vendor = $item["vendor"];
+            $new_item->item = $item["item"];
+            $new_item->price = $price;
+            $new_item->pur_price = $pur_price;
+            $new_item->save();
+
+            //echo "New Item = ".$item["vendor"]; 
+          }       
+   
          }
 
         return $json;
     }
-
-    
-
-    
-
     
 }
 ?>

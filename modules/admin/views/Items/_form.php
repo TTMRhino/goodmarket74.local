@@ -32,6 +32,8 @@ use app\models\SubGroup;
 
     <?= $form->field($model, 'price')->textInput() ?>
 
+    <?= $form->field($model, 'pur_price')->textInput() ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

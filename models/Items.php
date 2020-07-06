@@ -16,9 +16,9 @@ class Items extends \yii\db\ActiveRecord
     {
         return [
             [['vendor'], 'integer'],
-            [['price'], 'number'],
-            [['main_group', 'sub_group'], 'string', 'max' => 30],
-            [['item'], 'string', 'max' => 50],
+            [['price','pur_price'], 'number'],
+            [['main_group', 'sub_group'], 'string', 'max' => 130],
+            [['item'], 'string', 'max' => 150],
         ];
     }
 
@@ -32,6 +32,7 @@ class Items extends \yii\db\ActiveRecord
             'sub_group' => 'Sub Group',
             'item' => 'Item',
             'price' => 'Price',
+            'pur_price' => 'Purchase Price',
         ];
     }
 

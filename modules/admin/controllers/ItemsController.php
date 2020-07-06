@@ -99,11 +99,13 @@ class ItemsController extends Controller
             
             $upload_model->file= UploadedFile::getInstance($upload_model,'file');
             $json=$upload_model->getJson();
-
-          
             
-          
-            Yii::$app->session->setFlash('success', "Прайс загружен");
+            if ($json== 'error'){
+                Yii::$app->session->setFlash('error', "Что то  пошло не так !!!");  
+            }else{
+                Yii::$app->session->setFlash('success', "Прайс загружен");
+            }
+            
             return $this->redirect(['loadeprice']);
         }
 

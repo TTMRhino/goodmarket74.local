@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'vendor',
             //'main_group',
             [
@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
               ],
             'item',
             'price',
+            'pur_price',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
