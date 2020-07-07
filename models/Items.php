@@ -17,8 +17,8 @@ class Items extends \yii\db\ActiveRecord
         return [
             [['vendor'], 'integer'],
             [['price','pur_price'], 'number'],
-            [['main_group', 'sub_group'], 'string', 'max' => 130],
-            [['item'], 'string', 'max' => 150],
+            [['main_group', 'sub_group'], 'string', 'max' => 200],
+            [['item'], 'string', 'max' => 200],
         ];
     }
 

@@ -28,7 +28,7 @@ class  UploadFile extends Model
          
         $xml_file=file_get_contents($this->file->tempName);
         $json = json_decode($xml_file,true);   
-        
+       
          if (empty($json)){
             return "error"; //если json поврежден
          }
@@ -43,9 +43,10 @@ class  UploadFile extends Model
           $main_id=$main_group->getMaingroupIdByName($item["main_group"]);//находим id основной группы по имени
           $sub_id=$sub_group->getSubgroupIdByName($item["sub_group"]);//находим id подгруппы по имени
 
-          if (empty($main_id) or empty($sub_id) ){
-              return "error"; //если под группы не совпали
-          }
+         (empty($main_id)) ? $main_id = 16: "";
+         //если под группы не совпали
+         (empty(sub_id)) ? $sub_id = 63: "";
+         
 
           //формируем цену
           $pur_price = $item["price"];
